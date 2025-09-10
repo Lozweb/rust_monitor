@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+.main-container {
+  @apply bg-amber-300 h-screen flex items-center justify-center;
+}
+

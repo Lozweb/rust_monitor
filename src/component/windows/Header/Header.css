@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+.header {
+    @apply fixed top-0 left-0 w-full h-12 bg-gray-800 flex items-center justify-between z-50;
+}
+.window-title {
+    @apply absolute left-0 right-0 flex items-center justify-center h-full pointer-events-none;
+}
+
+.window-title-font {
+    @apply text-white text-lg font-semibold;
+}
+
+.window-controls {
+    @apply flex items-center space-x-2 pr-4 absolute right-0 h-full;
+}
+
+.window-controls-button {
+    @apply w-8 h-8 flex items-center justify-center rounded;
+}
