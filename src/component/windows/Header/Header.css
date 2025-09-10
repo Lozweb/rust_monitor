@@ -18,3 +18,11 @@
 .window-controls-button {
     @apply w-8 h-8 flex items-center justify-center rounded;
 }
+
+.window-controls-icon-light {
+    color: #f3f3f3;
+    transition: color 0.2s;
+}
+.window-controls-button:hover .window-controls-icon-light {
+    color: #ffd700;
+}
