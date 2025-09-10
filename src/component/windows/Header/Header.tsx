@@ -1,30 +1,38 @@
 import './Header.css'
 import {getCurrentWindow} from "@tauri-apps/api/window";
 
+type Controle = "minimize" | "maximize" | "close" | "drag";
 export default function Header() {
-    const handleMinimize = async () => {
+    const handleMouseDown = async (e: React.MouseEvent, action: Controle) => {
         const win = getCurrentWindow();
-        await win.minimize();
+        switch (action) {
+            case "minimize" :
+                await win.minimize();
+                break;
+            case "maximize" :
+                await win.toggleMaximize()
+                break;
+            case "close":
+                await win.close();
+                break;
+            case "drag":
+                if (e.button === 0) await win.startDragging();
+                break;
+        }
     }
-    const handleMaximize = async () => {
-        const win = getCurrentWindow();
-        await win.toggleMaximize();
-    }
-    const handleClose = async () => {
-        const win = getCurrentWindow();
-        await win.close();
-    }
+
     return (
         <header
-            onDoubleClick={handleMaximize}
+            data-tauri-drag-region
+            onMouseDown={(e) => handleMouseDown(e, "drag")}
             className="header"
         >
             <div className="window-title">
-                <span className="window-title-font">Titre de la fenêtre</span>
+                <span className="window-title-font">Rust Monitor</span>
             </div>
             <div className="window-controls">
                 <button
-                    onClick={handleMinimize}
+                    onMouseDown={(e) => handleMouseDown(e, "minimize")}
                     className="window-controls-button hover:bg-gray-600 bg-gray-800"
                     aria-label="Minimiser"
                 >
@@ -34,7 +42,7 @@ export default function Header() {
                     </svg>
                 </button>
                 <button
-                    onClick={handleMaximize}
+                    onMouseDown={(e) => handleMouseDown(e, "maximize")}
                     className="window-controls-button hover:bg-gray-600 bg-gray-800"
                     aria-label="Maximiser"
                 >
@@ -44,7 +52,7 @@ export default function Header() {
                     </svg>
                 </button>
                 <button
-                    onClick={handleClose}
+                    onMouseDown={(e) => handleMouseDown(e, "close")}
                     className="window-controls-button hover:bg-gray-600 bg-gray-800"
                     aria-label="Fermer"
                 >
